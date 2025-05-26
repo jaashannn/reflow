@@ -40,14 +40,25 @@ const FreelancerDashboard = () => {
   const { currentUser } = useAuth();
   
   useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      toast.success('Dashboard data loaded successfully!');
-    }, 1000);
+    // Simulate a fake request that fails
+    const fetchData = async () => {
+      try {
+        // Simulate a failed API call by throwing an error
+        throw new Error('Failed to fetch dashboard data');
+        setIsLoading(false);
+        toast.success('Dashboard data loaded successfully!');
+      } catch (error) {
+        // Instead of handling the error gracefully, throw it to crash the component
+        throw new Error('Critical error: Unable to load dashboard');
+      }
+    };
     
-    return () => clearTimeout(timer);
+    fetchData();
+    
+    // No cleanup needed for this case
   }, []);
+  
+  // The rest of the component will not render due to the error being thrown
   
   // Filter proposals for current freelancer
   const freelancerProposals = proposals.filter(proposal => 
